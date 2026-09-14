@@ -1,4 +1,4 @@
-use zed_extension_api::{self as zed, settings::LspSettings, Result};
+use zed_extension_api::{self as zed, Result, settings::LspSettings};
 
 struct BamlLspExtension;
 
@@ -23,13 +23,9 @@ impl zed::Extension for BamlLspExtension {
             .as_ref()
             .and_then(|binary| binary.arguments.clone())
             .unwrap_or_else(|| vec!["lsp".to_string()]);
-        let environment = binary
-            .and_then(|binary| binary.env)
-            .unwrap_or_default();
+        let environment = binary.and_then(|binary| binary.env).unwrap_or_default();
 
-        Ok(zed::Command::new(path)
-            .args(arguments)
-            .envs(environment))
+        Ok(zed::Command::new(path).args(arguments).envs(environment))
     }
 }
 
