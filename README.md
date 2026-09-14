@@ -6,7 +6,7 @@ Syntax parsing and highlighting use the official [`BoundaryML/baml-treesitter`](
 
 ## Grammar updates
 
-The `update-grammar` workflow checks the upstream grammar daily. When a new commit is available, it updates the pin and upstream-derived highlight and injection query files, bumps the extension patch version, validates the grammar, and opens or refreshes a pull request. It can also be started manually from the GitHub Actions page.
+The `update-grammar` workflow checks the upstream grammar daily. When a new commit is available, it updates the pin and upstream-derived highlight and injection query files, bumps the extension patch version, validates the grammar, and opens or refreshes a pull request.
 
 Run the same synchronization locally with:
 
