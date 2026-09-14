@@ -1,0 +1,21 @@
+id = "baml-lsp"
+name = "BAML LSP"
+version = "0.1.0"
+schema_version = 1
+authors = ["BAML contributors"]
+description = "BAML language support powered by a locally installed BAML CLI."
+repository = "https://github.com/BoundaryML/baml-lsp-zed-extension"
+languages = ["languages/baml"]
+capabilities = []
+
+[lib]
+kind = "Rust"
+version = "0.7.0"
+
+[grammars.baml]
+repository = "https://github.com/BoundaryML/tree-sitter-baml"
+rev = "3edd0d25e2cf352295ade681f4a2c2f3a9cdc58b"
+
+[language_servers.baml]
+language = "Baml"
+languages = []

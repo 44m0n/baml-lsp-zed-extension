@@ -1,1 +1,32 @@
-# baml-lsp-zed-extension
+# BAML LSP for Zed
+
+A minimal Zed language extension that associates `.baml` files with the current BAML CLI language server. It does not bundle or download BAML.
+
+## Install as a development extension
+
+1. In Zed, run `zed: install dev extension`.
+2. Select this repository directory.
+3. Configure the BAML executable in the Zed settings of the machine that runs the language server:
+
+```jsonc
+{
+  "lsp": {
+    "baml": {
+      "binary": {
+        "path": "/home/coder/.baml/bin/baml",
+        "arguments": ["lsp"]
+      }
+    }
+  }
+}
+```
+
+When no binary is configured, the extension runs `baml lsp` and relies on `baml` being present in `PATH`.
+
+## Remote development
+
+Zed starts language servers on the remote host. Install BAML on every remote host and place that host’s executable path in its remote Zed settings (`~/.config/zed/settings.json` on Linux). Do not place machine-specific paths in a project `.zed/settings.json`.
+
+## Requirements
+
+Zed development extensions with Rust code require Rust and the `wasm32-wasip2` target. Zed can install the target automatically when Rust is installed through `rustup`.
