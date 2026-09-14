@@ -18,7 +18,10 @@ impl zed::Extension for BamlLspExtension {
         let path = binary
             .as_ref()
             .and_then(|binary| binary.path.clone())
-            .unwrap_or_else(|| "baml".to_string());
+            .or_else(|| worktree.which("baml"))
+            .ok_or_else(|| {
+                "BAML CLI was not found on PATH; configure lsp.baml.binary.path".to_string()
+            })?;
         let arguments = binary
             .as_ref()
             .and_then(|binary| binary.arguments.clone())
