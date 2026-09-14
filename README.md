@@ -1,0 +1,1 @@
+# baml-lsp-zed-extension
