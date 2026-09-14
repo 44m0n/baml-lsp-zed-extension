@@ -2,7 +2,17 @@
 
 A minimal Zed language extension that associates `.baml` files with the current BAML CLI language server. It does not bundle or download BAML.
 
-Syntax parsing and highlighting use the official [`BoundaryML/baml-treesitter`](https://github.com/BoundaryML/baml-treesitter) grammar. The grammar is pinned to a specific commit in `extension.toml`; when the grammar is updated, bump that revision and refresh the query files in `languages/baml/` from the same commit.
+Syntax parsing and highlighting use the official [`BoundaryML/baml-treesitter`](https://github.com/BoundaryML/baml-treesitter) grammar. The grammar is pinned to a specific commit in `extension.toml`.
+
+## Grammar updates
+
+The `update-grammar` workflow checks the upstream grammar daily. When a new commit is available, it updates the pin and Zed query files, bumps the extension patch version, validates the grammar, and opens or refreshes a pull request. It can also be started manually from the GitHub Actions page.
+
+Run the same synchronization locally with:
+
+```sh
+python3 scripts/update_baml_grammar.py
+```
 
 ## Install as a development extension
 

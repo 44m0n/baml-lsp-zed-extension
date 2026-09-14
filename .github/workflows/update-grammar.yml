@@ -1,0 +1,86 @@
+name: Update BAML grammar
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: update-baml-grammar
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out extension
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Synchronize grammar pin and queries
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/update_baml_grammar.py
+
+      - name: Detect update
+        id: changes
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Node.js
+        if: steps.changes.outputs.changed == 'true'
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+
+      - name: Validate updated grammar and queries
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          REVISION=$(python3 -c 'import tomllib; print(tomllib.load(open("extension.toml", "rb"))["grammars"]["baml"]["rev"])')
+          git clone --filter=blob:none https://github.com/BoundaryML/baml-treesitter.git /tmp/baml-treesitter
+          git -C /tmp/baml-treesitter checkout "$REVISION"
+          cd /tmp/baml-treesitter
+          npx --yes tree-sitter-cli@0.25.10 test
+          cat > sample.baml <<'EOF'
+          class LinkRef {
+              destination: string,
+          }
+
+          class Document {
+              children: Block[],
+              refs: map<string, LinkRef>,
+          }
+
+          function Summarize(input: string) -> string {
+              client: "openai/gpt-4o"
+              prompt: #"Summarize {{ input }}"#
+          }
+          EOF
+          npx --yes tree-sitter-cli@0.25.10 parse sample.baml --quiet --stat
+          npx --yes tree-sitter-cli@0.25.10 query "$GITHUB_WORKSPACE/languages/baml/highlights.scm" sample.baml --quiet
+          npx --yes tree-sitter-cli@0.25.10 query "$GITHUB_WORKSPACE/languages/baml/injections.scm" sample.baml --quiet
+
+      - name: Open grammar update pull request
+        if: steps.changes.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676 # v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/update-baml-grammar
+          delete-branch: true
+          commit-message: Update BAML Tree-sitter grammar
+          title: Update BAML Tree-sitter grammar
+          body: |
+            Automated update from `BoundaryML/baml-treesitter`.
+
+            This pull request updates the pinned grammar revision, synchronizes
+            the Zed highlight and injection queries, and bumps the extension's
+            patch version after the grammar validation suite passes.
