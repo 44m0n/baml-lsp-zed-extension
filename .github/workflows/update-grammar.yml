@@ -68,6 +68,9 @@ jobs:
           npx --yes tree-sitter-cli@0.25.10 parse sample.baml --quiet --stat
           npx --yes tree-sitter-cli@0.25.10 query "$GITHUB_WORKSPACE/languages/baml/highlights.scm" sample.baml --quiet
           npx --yes tree-sitter-cli@0.25.10 query "$GITHUB_WORKSPACE/languages/baml/injections.scm" sample.baml --quiet
+          npx --yes tree-sitter-cli@0.25.10 query "$GITHUB_WORKSPACE/languages/baml/brackets.scm" sample.baml --quiet
+          npx --yes tree-sitter-cli@0.25.10 query "$GITHUB_WORKSPACE/languages/baml/indents.scm" sample.baml --quiet
+          npx --yes tree-sitter-cli@0.25.10 query "$GITHUB_WORKSPACE/languages/baml/outline.scm" sample.baml --quiet
 
       - name: Open grammar update pull request
         if: steps.changes.outputs.changed == 'true'

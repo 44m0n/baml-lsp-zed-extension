@@ -6,7 +6,7 @@ Syntax parsing and highlighting use the official [`BoundaryML/baml-treesitter`](
 
 ## Grammar updates
 
-The `update-grammar` workflow checks the upstream grammar daily. When a new commit is available, it updates the pin and Zed query files, bumps the extension patch version, validates the grammar, and opens or refreshes a pull request. It can also be started manually from the GitHub Actions page.
+The `update-grammar` workflow checks the upstream grammar daily. When a new commit is available, it updates the pin and upstream-derived highlight and injection query files, bumps the extension patch version, validates the grammar, and opens or refreshes a pull request. It can also be started manually from the GitHub Actions page.
 
 Run the same synchronization locally with:
 
@@ -25,7 +25,7 @@ python3 scripts/update_baml_grammar.py
   "lsp": {
     "baml": {
       "binary": {
-        "path": "/home/coder/.baml/bin/baml",
+        "path": "/path/to/baml",
         "arguments": ["lsp"]
       }
     }
@@ -37,7 +37,7 @@ When no binary is configured, the extension runs `baml lsp` and relies on `baml`
 
 ## Remote development
 
-Zed starts language servers on the remote host. Install BAML on every remote host and place that host’s executable path in its remote Zed settings (`~/.config/zed/settings.json` on Linux). Do not place machine-specific paths in a project `.zed/settings.json`.
+Zed starts language servers on the remote host. Install BAML on every remote host and place that host’s executable path in its remote Zed settings (`~/.config/zed/settings.json` on Linux). Do not place machine-specific paths in a project `.zed/settings.json`. For example, if BAML is installed for a remote user named `alice`, configure `"path": "/home/alice/.baml/bin/baml"` in that remote host’s settings.
 
 ## Requirements
 
