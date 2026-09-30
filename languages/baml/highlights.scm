@@ -1,5 +1,5 @@
 ; BAML highlight queries adapted for Zed from BoundaryML/baml-treesitter.
-; Grammar revision: 276b4d8471f1c2f2ce80f182ab46d171b825f2b7.
+; Grammar revision: 35dc42c5a32df2c95809761728a73cb8e8f7cf1c.
 
 ; ---------------------------------------------------------------------------
 ; Catch-alls
