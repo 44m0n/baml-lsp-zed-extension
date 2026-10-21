@@ -1,5 +1,5 @@
 ; BAML highlight queries adapted for Zed from BoundaryML/baml-treesitter.
-; Grammar revision: 35dc42c5a32df2c95809761728a73cb8e8f7cf1c.
+; Grammar revision: 90dacc1f6b933ff82e381bda6d7ad3f0e1584505.
 
 ; ---------------------------------------------------------------------------
 ; Catch-alls
@@ -31,6 +31,7 @@
 [
   (string)
   (byte_string)
+  (raw_quoted_string)
 ] @string
 
 (raw_string) @string
@@ -166,6 +167,7 @@
 (named_type_argument name: (identifier) @property)
 (destructure_pattern type: (identifier) @type)
 (generic_parameter name: (identifier) @type)
+(let_type_declaration name: (identifier) @type)
 (client_type kind: (identifier) @type.builtin)
 
 ((type_path
