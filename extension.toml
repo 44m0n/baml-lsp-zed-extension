@@ -1,6 +1,6 @@
 id = "baml"
 name = "BAML LSP"
-version = "0.1.2"
+version = "0.1.3"
 schema_version = 1
 authors = ["Ramon C Horomnea"]
 description = "BAML language support powered by a locally installed BAML CLI."
@@ -14,7 +14,7 @@ version = "0.7.0"
 
 [grammars.baml]
 repository = "https://github.com/BoundaryML/baml-treesitter"
-rev = "90dacc1f6b933ff82e381bda6d7ad3f0e1584505"
+rev = "c1976f2ef354537c0141ccef83a92bccb15a0246"
 
 [language_servers.baml]
 language = "Baml"

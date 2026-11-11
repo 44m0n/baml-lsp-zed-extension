@@ -1,5 +1,5 @@
 ; Adapted for Zed from BoundaryML/baml-treesitter.
-; Grammar revision: 90dacc1f6b933ff82e381bda6d7ad3f0e1584505.
+; Grammar revision: c1976f2ef354537c0141ccef83a92bccb15a0246.
 
 ; Prompt bodies and template_string bodies are Jinja templates.
 ; The raw string content between `#"` and `"#` is a single
