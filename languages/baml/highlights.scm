@@ -1,5 +1,5 @@
 ; BAML highlight queries adapted for Zed from BoundaryML/baml-treesitter.
-; Grammar revision: 90dacc1f6b933ff82e381bda6d7ad3f0e1584505.
+; Grammar revision: e02989a78d382139defbb751c0196242af99ff73.
 
 ; ---------------------------------------------------------------------------
 ; Catch-alls
@@ -7,6 +7,7 @@
 
 (identifier) @variable
 (property_identifier) @property
+(tuple_index) @property
 
 ; ---------------------------------------------------------------------------
 ; Comments
@@ -231,6 +232,7 @@
 (interface_declaration name: (identifier) @type)
 (type_alias_declaration name: (identifier) @type)
 (client_declaration name: (identifier) @type)
+(client_value_declaration name: (identifier) @constant)
 (generator_declaration name: (identifier) @constant)
 (retry_policy_declaration name: (identifier) @constant)
 (template_string_declaration name: (identifier) @function)
@@ -298,3 +300,6 @@
 (template_for_open "for" @keyword)
 (template_if_open "if" @keyword)
 (template_else_if "else" @keyword "if" @keyword)
+
+; `Extract@spec(...)`: a function's companion.
+(companion_expression companion: (property_identifier) @function)
